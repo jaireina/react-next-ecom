@@ -15,8 +15,7 @@ export default function Home() {
         <h1 className={styles.title}>SPACE JELLY STORE</h1>
 
         <p className={styles.description}>
-          Get started by editing{" "}
-          <code className={styles.code}>pages/index.js</code>
+          The best space jellyfish swag in the universe!
         </p>
 
         <ul className={styles.grid}>
