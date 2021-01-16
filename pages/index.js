@@ -1,9 +1,9 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import products from "../products.json";
+import { initiateCheckout } from "../lib/payments";
 
 export default function Home() {
-  console.log(products);
   return (
     <div className={styles.container}>
       <Head>
@@ -22,13 +22,28 @@ export default function Home() {
           {products.map((product) => {
             const { id, title, description, image, price } = product;
             return (
-              <li className={styles.card}>
-                <a href="https://nextjs.org/docs" key={id}>
+              <li className={styles.card} key={id}>
+                <a href="https://nextjs.org/docs">
                   <img src={image} alt={description} />
                   <h3>{title}</h3>
                   <p>${price}</p>
                   <p>{description}</p>
                 </a>
+                <button
+                  className={styles.button}
+                  onClick={() =>
+                    initiateCheckout({
+                      lineItems: [
+                        {
+                          price: id,
+                          quantity: 1,
+                        },
+                      ],
+                    })
+                  }
+                >
+                  Buy Now
+                </button>
               </li>
             );
           })}
