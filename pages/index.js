@@ -1,9 +1,15 @@
 import Head from "next/head";
+// import { FaShoppingCart } from "react-icons/fa";
 import styles from "../styles/Home.module.css";
-import products from "../products.json";
-import { initiateCheckout } from "../lib/payments";
+import Link from "next/link";
+
+import { useCart } from "../hooks/use-cart.js";
+
+import products from "../shared/products.json";
 
 export default function Home() {
+  const { subtotal, quantity, addToCart, checkout } = useCart();
+
   return (
     <div className={styles.container}>
       <Head>
@@ -12,38 +18,49 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>SPACE JELLY STORE</h1>
-
         <p className={styles.description}>
-          The best space jellyfish swag in the universe!
+          The best space jellyfish swag on the web!
         </p>
+
+        {/* <ul className={styles.cart}>
+          <li>
+            <strong>Items:</strong> {quantity}
+          </li>
+          <li>
+            <strong>Total:</strong> ${subtotal}
+          </li>
+          <li>
+            <button
+              className={`${styles.button} ${styles.cartButton}`}
+              onClick={checkout}
+            >
+              <FaShoppingCart />
+              Check Out
+            </button>
+          </li>
+        </ul> */}
 
         <ul className={styles.grid}>
           {products.map((product) => {
-            const { id, title, description, image, price } = product;
+            const { id, title, image, description, price } = product;
             return (
-              <li className={styles.card} key={id}>
-                <a href="https://nextjs.org/docs">
-                  <img src={image} alt={description} />
-                  <h3>{title}</h3>
-                  <p>${price}</p>
-                  <p>{description}</p>
-                </a>
-                <button
-                  className={styles.button}
-                  onClick={() =>
-                    initiateCheckout({
-                      lineItems: [
-                        {
-                          price: id,
-                          quantity: 1,
-                        },
-                      ],
-                    })
-                  }
-                >
-                  Buy Now
-                </button>
+              <li key={id} className={styles.card}>
+                <Link href={`/products/${id}`}>
+                  <a>
+                    <img src={image} alt={title} />
+                    <h3>{title}</h3>
+                    <p>${price}</p>
+                    <p>{description}</p>
+                    <p>
+                      <button
+                        className={styles.button}
+                        onClick={() => addToCart({ id })}
+                      >
+                        Buy
+                      </button>
+                    </p>
+                  </a>
+                </Link>
               </li>
             );
           })}
