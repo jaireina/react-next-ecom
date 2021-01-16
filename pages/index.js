@@ -1,7 +1,9 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import products from "../products.json";
 
 export default function Home() {
+  console.log(products);
   return (
     <div className={styles.container}>
       <Head>
@@ -17,25 +19,21 @@ export default function Home() {
           <code className={styles.code}>pages/index.js</code>
         </p>
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>PRODUCT 1</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>PRODUCT 2</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>PRODUCT 3</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-        </div>
+        <ul className={styles.grid}>
+          {products.map((product) => {
+            const { id, title, description, image, price } = product;
+            return (
+              <li className={styles.card}>
+                <a href="https://nextjs.org/docs" key={id}>
+                  <img src={image} alt={description} />
+                  <h3>{title}</h3>
+                  <p>${price}</p>
+                  <p>{description}</p>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
       </main>
 
       <footer className={styles.footer}>
