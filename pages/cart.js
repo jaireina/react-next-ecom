@@ -56,7 +56,8 @@ export default function Cart() {
     return {
       ...item,
       title: product.title,
-      total: item.quantity * item.pricePerItem,
+      total: `$${item.quantity * item.pricePerItem}`,
+      pricePerItem: `$${item.pricePerItem}`,
       quantity: <Quantity />,
     };
   });
