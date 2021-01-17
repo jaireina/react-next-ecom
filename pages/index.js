@@ -54,9 +54,12 @@ export default function Home() {
                     <p>
                       <button
                         className={styles.button}
-                        onClick={() => addToCart({ id })}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          addToCart({ id });
+                        }}
                       >
-                        Buy
+                        Add To Cart
                       </button>
                     </p>
                   </a>

@@ -4,16 +4,18 @@ import { useCart } from "../../hooks/use-cart";
 import Link from "next/link";
 
 const Nav = () => {
-  const { subtotal, checkout } = useCart();
+  const { subtotal } = useCart();
   return (
     <nav className={styles.nav}>
       <Link href="/">
-        <p className={styles.navTitle}>Space Jelly Shop</p>
+        <a className={styles.navTitle}>Space Jelly Shop</a>
       </Link>
       <p className={styles.navCart}>
-        <button onClick={checkout}>
-          <FaShoppingCart /> ${subtotal}
-        </button>
+        <Link href="/cart">
+          <a>
+            <FaShoppingCart /> ${subtotal}
+          </a>
+        </Link>
       </p>
     </nav>
   );

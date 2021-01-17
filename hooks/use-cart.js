@@ -50,6 +50,20 @@ export function useCartState() {
     });
   }
 
+  function updateItem({ id, quantity }) {
+    updateCart((prev) => {
+      let cartState = { ...prev };
+      if (quantity === 0) {
+        delete cartState.products[id];
+      }
+
+      if (cartState.products[id]) {
+        cartState.products[id].quantity = quantity;
+      }
+      return cartState;
+    });
+  }
+
   useEffect(() => {
     const stateFromStorage = window.localStorage.getItem("cart");
     const data = stateFromStorage && JSON.parse(stateFromStorage);
@@ -70,6 +84,8 @@ export function useCartState() {
     quantity,
     addToCart,
     checkout,
+    cartItems,
+    updateItem,
   };
 }
 
